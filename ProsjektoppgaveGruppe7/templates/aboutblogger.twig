@@ -1,0 +1,164 @@
+{% extends "index.twig" %}
+
+
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+{% endblock %}
+
+
+{% block content1 %}
+
+    {% if  innloget==true and blogowner==false and om==true %}
+        <h1><br/></h1>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Opprette bloggen din</h5>
+
+                <p class="card-text">Fullfør alle skjemaer og lag din egen blogg. Deretter kan du skrive artikler</p>
+                <br/>
+
+                <form method="Post">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text blogfieldwidth">Bloggnavn</span>
+
+                        </div>
+                        <input type="text" class="form-control" name="blogname" aria-label="blognavn"
+                               placeholder="Skriv inn navnet på bloggen..." required> <br/>
+
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text blogfieldwidth">Blogg emne</span>
+
+                        </div>
+                        <select class="custom-select" name="idBlogCategory" required>
+                            <option selected>Velg et emne...</option>
+                            {% for cat in blogcategory %}
+                                <option value={{ cat.id_blogcategory }}>{{ cat.blogcategoryname }}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                            <span class="input-group-text blogfieldwidth">Om</span>
+
+                        </div>
+
+                        <textarea class="form-control" name="aboutblogger" aria-label="info aboutblogger"
+                                  placeholder="Skriv om deg selv..." required></textarea>
+
+
+                    </div>
+
+
+                    <button type="submit" name="OppretteBlog" class="btn btn-success">Opprette</button>
+
+                </form>
+            </div>
+
+        </div>
+        <br/>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Slet konto</h5>
+
+                <p class="card-text">For å slette kontoen din, klikk på "Slett konto" -knappen. All informasjon om deg
+                    blir slettet.</p>
+                <br/>
+
+                <form method="Post">
+
+                    <button type="submit" name="deleteUser" class="btn btn-danger">Slett konto</button>
+
+                </form>
+            </div>
+
+        </div>
+
+    {% else %}
+
+
+
+        {% if innloget==false or notownerofthisbliog==true %}
+
+
+            {% if about %}
+                <br>
+                <div class="card">
+                    <div class="card-body aboutblogger">
+
+
+                        <div class="sentr">{{ showaboutblog.blogname }}
+                            <br/></div>
+
+                        <hr>
+                        <div class="smalltext">{{ showaboutblog.aboutblogger }}
+                            <br/></div>
+
+
+                    </div>
+
+                </div>
+            {% else %}
+                <br>
+                <div class="card ">
+                    <div class="card-body ">
+
+                        <div class="sentr"><h1>Informasjon om vår blog</h1></div>
+                        <hr>
+                        <div> Velkommen til vår blog, her kan du opprette din egen blog av forskjellige temaer,
+                            lese og kommentere de andre bloggene. For å opprette din egen blog eller skrive kommentarer,
+                            må du registrere deg first
+                            og verifisere den account. Hvis du vil bare se gjennom bloggene eller kommentarere, er det
+                            ikke krav
+                            å registrere seg.
+                        </div>
+                        <hr>
+                        <small class="text-muted">Skapere: Aleksey Poroshin og Georgii Bogdanov</small>
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+        {% else %}
+            <br>
+            <div class="card">
+                <div class="card-body aboutblogger">
+
+
+                    <div class="sentr"><h3>{{ showaboutblog.blogname }}
+                        <br/></h3></div>
+
+                    <hr>
+                    <div class="smalltext">{{ showaboutblog.aboutblogger }}
+                        <br/></div>
+                    <hr>
+
+                    <form method="POST">
+                        <button type="submit" name="deleteBlog" class="btn btn-danger">Slett bloggen</button>
+                        <button type="submit" name="deleteUser" class="btn btn-danger">Slett konto</button>
+                    </form>
+
+                </div>
+
+            </div>
+
+
+
+        {% endif %}
+    {% endif %}
+
+{% endblock %}

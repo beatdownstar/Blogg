@@ -1,0 +1,85 @@
+
+
+<br/>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title"><strong><i class="far fa-newspaper"></i> Populære artikler</strong></h5>
+
+            <p class="card-text">
+
+             {% for post in topfiveposts %}
+                <div class="alert alert-light sidebarcolor" role="alert">
+            <p> <a href="?idpost={{ post.getIdPost() }}" class="badge badge-light"><h4>{{ post.getTittle() }}</h4></a>
+
+
+                <a href="?idblogabout={{ post.getIdBlog() }}" class="badge badge-info"><i class="fas fa-user"></i> {{ post.getUserName() }} <i
+                            class="fas fa-calendar-alt"></i> {{ post.getPubDate() }}</a><br />
+                      <span class="badge badge-success"> <i class="fa fa-eye" aria-hidden="true"></i> {{ post.getViews() }} <i
+                        class="fa fa-comments"
+                        aria-hidden="true"></i> {{ post.getAntallComments() }}</span>
+
+                     </p>
+
+                 </div>
+            {% endfor %}
+
+            </p>
+
+        </div>
+
+    </div>
+<br />
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title"><strong><i class="fas fa-comments"></i> Siste kommentarer</strong></h5>
+
+        <p class="card-text">
+
+
+{% for comment in lastfivecomments %}
+    <div class="alert alert-light sidebarcolor" role="alert">
+
+
+
+        <p>    {{ comment.getText() | slice(0,40) }}... </p>
+
+        <span class="badge badge-info"> <i class="fas fa-user"></i> {{ comment.getUserName() }} <i
+                    class="fas fa-calendar-alt"></i> {{ comment.getPubDate() }}</span>
+        <p class="text-muted">
+            Kommentar til: <a href="?idpost={{ comment.getIdPost() }}">   {{ comment.getPostTittle() }} </a>
+        </p>
+
+    </div>
+{% endfor %}
+
+    </p>
+
+</div>
+
+</div>
+
+<br />
+
+<div class="card border-primary mb-3">
+    <div class="card-header"><strong><i class="fas fa-archive"></i> Artikler Arkiv</strong></div>
+    <div class="card-body text-primary">
+
+        <p class="card-text">
+
+            {% for arc in arkhiv %}
+
+                <a href="?month={{ arc.month }}.{{ arc.year }}">   {{ arc.month }}  {{ arc.year }} Antall
+                    artikler: {{ arc.antall }}</a><br/>
+
+            {% endfor %}
+
+
+        </p>
+    </div>
+</div>
+
+
+
+

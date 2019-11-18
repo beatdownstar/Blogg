@@ -1,0 +1,285 @@
+{% extends "index.twig" %}
+
+
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+{% endblock %}
+
+
+{% block content1 %}
+
+    {% if registered==1 %}
+
+
+        <script>$('#regplus').modal('show');</script>
+
+    {% elseif registered==2 %}
+
+        <script>$('#registration').modal('toggle');</script>
+        <script>$('#regminus').modal('show');</script>
+
+    {% elseif registered==3 %}
+
+        <script>$('#registration').modal('toggle');</script>
+        <script>$('#loginexist').modal('show');</script>
+
+    {% elseif registered==4 %}
+
+        <script>$('#registration').modal('toggle');</script>
+        <script>$('#emailexist').modal('show');</script>
+
+
+    {% endif %}
+
+    {% if loginplus==1 %}
+
+        <script>$('#loginform').modal('toggle');</script>
+        <script>$('#passwordminus').modal('show');</script>
+
+    {% elseif loginplus==2 %}
+
+        <script>$('#loginform').modal('toggle');</script>
+        <script>$('#loginminus').modal('show');</script>
+
+    {% elseif loginplus==3 %}
+
+        <script>$('#verifyminus').modal('show');</script>
+
+
+    {% elseif loginplus==4 %}
+
+        <script>$('#verifyplus').modal('show');</script>
+
+
+    {% endif %}
+
+
+    {% if search %}
+
+        {% if search[0]=="tomt" %}
+            <br/>  <br/>
+            <div class="alert alert-danger" role="alert">
+                <h4>Ingenting ble funnet. Prøv å endre søkeforholdene !!!</h4>
+            </div>
+
+            <br/>  <br/>
+        {% else %}
+            <br />
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title"><h2><strong><i class="fa fa-search" aria-hidden="true"></i> Search results  ({{ search |length }}) </strong></h2></h5>
+            <small class="text-muted">Søk ble gjort av: artikkeltittel, innehold og stikkord</small>
+            <p class="card-text">
+
+            <ol>
+                {% for result in search %}
+                <hr>
+
+                <li>
+
+            <p> <small class="text-muted">Artikkeltittel: </small><a href="?idpost={{ result.id_post }}"><strong>{{ result.tittle }}</strong></a><br/>
+                <small class="text-muted"> Innehold: </small>{{ result.text | slice(0,500) }}...</p>
+
+
+            <a href="?idblogabout={{ result.id_blog }}" class="badge badge-info"><i class="fas fa-user"></i> {{ result.username }} <i
+                        class="fas fa-calendar-alt"></i> {{ result.pub_date }}</a>
+
+            </li>
+
+                <hr>
+
+                {% endfor %}
+            </ol>
+            </p>
+
+        </div>
+
+    </div>
+            <br />
+        {% endif %}
+    {% else %}
+
+        <br/>
+
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                {% for postss in allposts %}
+                    {% if loop.index0==0 %}
+                        <li data-target="#carouselExampleIndicators" data-slide-to="{{ loop.index0 }}"
+                            class="active"></li>
+                    {% else %}
+                        <li data-target="#carouselExampleIndicators" data-slide-to="{{ loop.index0 }}"></li>
+                    {% endif %}
+                {% endfor %}
+            </ol>
+            <div class="carousel-inner">
+
+                {% for postss in topfiveposts %}
+                    {% if loop.index0==0 %}
+                        <div class="carousel-item active">
+
+                            <a href="?idpost={{ postss.getIdPost() }}"><img class="d-block w-100 carouselstyle "
+                                                                            src="showimage.php?id_post={{ postss.getIdPost() }}"
+                                                                            alt="{{ loop.index0 }}"></a>
+                            <div class="carousel-caption d-none d-md-block">
+                                <a href="?idpost={{ postss.getIdPost() }}" class="carusellink"><h3><span
+                                                class="bigspan">{{ postss.getTittle() }}</span></h3></a>
+                                <p>{{ postss.getText() | slice(0,100) }} . . .</p>
+                                <p><a class="carusellink" href="?idblogabout={{ postss.getIdBlog() }}"
+                                      class="carusellink"><i class="fas fa-user"></i> {{ postss.getUserName() }}</a> <i
+                                            class="fas fa-calendar-alt"></i> {{ postss.getPubDate() }}
+                                    <i class="fa fa-eye" aria-hidden="true"></i> {{ postss.getViews() }} <i
+                                            class="fa fa-comments"
+                                            aria-hidden="true"></i> {{ postss.getAntallComments() }}
+                                </p>
+                            </div>
+
+                        </div>
+                    {% else %}
+                        <div class="carousel-item">
+
+                            <a href="?idpost={{ postss.getIdPost() }}"><img class="d-block w-100 carouselstyle"
+                                                                            src="showimage.php?id_post={{ postss.getIdPost() }}"
+                                                                            alt="{{ loop.index0 }}"></a>
+                            <div class="carousel-caption d-none d-md-block">
+                                <a href="?idpost={{ postss.getIdPost() }}" class="carusellink"><h3><span
+                                                class="bigspan">{{ postss.getTittle() }}</span></h3></a>
+                                <p>{{ postss.getText() | slice(0,100) }} . . .</p>
+                                <p><a href="?idblogabout={{ postss.getIdBlog() }}" class="carusellink"><i
+                                                class="fas fa-user"></i> {{ postss.getUserName() }}</a> <i
+                                            class="fas fa-calendar-alt"></i> {{ postss.getPubDate() }}
+                                    <i class="fa fa-eye" aria-hidden="true"></i> {{ postss.getViews() }} <i
+                                            class="fa fa-comments"
+                                            aria-hidden="true"></i> {{ postss.getAntallComments() }}
+                                </p>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <br/>
+        <br/>
+
+        <h1><strong><i class="far fa-newspaper"></i> Siste artikler</strong></h1>
+
+        <div class="container">
+            <div class="row">
+                {% for post in allposts %}
+
+                    <div class="sistart">
+                        <div class="card text-white">
+                            <img class="img-fluid max-weight: 100% imgsist"
+                                 src="showimage.php?id_post={{ post.getIdPost() }}" alt="Card image">
+                            <div class="card-img-overlay">
+
+                                <a href="?idcat={{ post.getIdCategory() }}" class="carusellink"><span
+                                            class="smallspan"> {{ post.getCategoryName() }}</span></a><br/>
+                                <a href="?idpost={{ post.getIdPost() }}" class="carusellink"><p
+                                            class="sisteartikkelP">{{ post.getTittle() }}</p></a></br>
+                                <p class="sisteartikkelPDate "><i
+                                            class="fas fa-calendar-alt"></i> {{ post.getPubDate() }}</p>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                {% endfor %}
+            </div>
+        </div>
+        {% if innloget==false %}
+            <br/>
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title"> Lag din egen blogg </h2>
+
+                    <p class="card-text">
+
+
+                    <p>Velkommen til vår blog, her kan du opprette din egen blog av forskjellige temaer,
+                        lese og kommentere de andre bloggene. <a href="?page=about"> Les mer ...</a></p>
+
+
+                </div>
+
+            </div>
+        {% endif %}
+
+        <br/>
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title"><strong><i class="fa fa-book" aria-hidden="true"></i> Blogger </strong></h2>
+                <hr>
+                <p class="card-text ">
+
+
+                <div class="row justify-content-md-center">
+
+                    {% for blog in lastfiveblogs %}
+                        <div class="card">
+                            <div class="card-body sidebarcolor">
+
+                                <h6><strong>{{ blog.blogname }}</strong></h6>
+
+
+                                <a href="?idblogabout={{ blog.id_blog }}" class="badge badge-info"><i
+                                            class="fas fa-user"></i> {{ blog.username }}</a>
+                                <a href="?idblog={{ blog.id_blog }}" class="badge badge-warning"><i
+                                            class="far fa-file-alt"></i>
+                                    Artikler</a>
+
+                                <div class="text-muted"><strong>{{ blog.blogcategoryname }}</strong></div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                </div>
+
+
+            </div>
+
+        </div>
+        <br/>
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title"><strong><i class="fa fa-hashtag" aria-hidden="true"></i> Tags </strong></h3>
+
+                <p class="card-text">
+                <hr>
+                <div class="row">
+                    {% for tag in tags %}
+
+                        <form method="post">
+                            <input type="hidden" name="search" value="{{ tag.keywords }}">
+                            <button type="submit" name="btSearch" class="btn btn-link">#{{ tag.keywords }}</button>
+                        </form>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <br/>
+    {% endif %}
+
+
+
+{% endblock %}

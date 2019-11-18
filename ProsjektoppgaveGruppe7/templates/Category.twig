@@ -1,0 +1,71 @@
+{% extends "index.twig" %}
+
+
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+{% endblock %}
+
+
+{% block content1 %}
+
+
+        {% if allcat %}
+            <br>
+            <div class="card text-center">
+            <div class="card-body">
+                {% for cat in allcat %}
+
+
+
+                        <h3 class="card-title"><a href="?idcat={{ cat.getIdCategory }}"><span
+                                        class="badge badge-secondary categorystyle text-center"> {{ cat.getCategoryName }} </span></a><br/>
+                        </h3>
+
+
+                {% endfor %}
+
+            </div>
+    </div>
+        {% endif %}
+
+
+        {% if catpost %}
+<div class="container">
+            <br/>
+    <h2 class="bigfont"> Artikler i kategori: {{ catpost.0.categoryname }}</h2>
+            <hr>
+
+
+            <div class="container">
+                <div class="row">
+                    {% for catposts in catpost %}
+
+                        <div class="sistart">
+                            <div class="card text-white">
+                                <img class="img-fluid max-weight: 100% imgsist"
+                                     src="showimage.php?id_post={{ catposts.getIdPost() }}" alt="Card image">
+                                <div class="card-img-overlay">
+
+                                    <a href="?idpost={{ catposts.getIdPost() }}" class="carusellink"><span
+                                                class="smallspan"> {{ catposts.getTittle }}</span></a><br/>
+                                    <p class="sisteartikkelPDate "><i
+                                                class="fas fa-calendar-alt"></i> {{ catposts.getPubDate() }}</p>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                </div>
+            </div>
+</div>
+        {% endif %}
+
+
+{% endblock %}
+

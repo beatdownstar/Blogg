@@ -1,0 +1,321 @@
+{% extends "index.twig" %}
+
+
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+{% endblock %}
+
+
+{% block content1 %}
+    <br/>
+    {% if arkhivvalg %}
+
+<ul>
+        <h2 class="bigfont">Arkiv av artikler for perioden: {{ period |replace({'.': ' ' }) }}</h2>
+<hr>
+<br/>
+
+            {% for arcperiod in arkhivvalg %}
+
+                <div class="card bg-dark text-white w-60 p-6">
+                    <img class="img-fluid card-img-top " src="showimage.php?id_post={{ arcperiod.getIdPost() }}"
+                         alt="Card image">
+                    <div class="card-img-overlay">
+                        <h3 class="card-title"><a href="?idpost={{ arcperiod.getIdPost() }}"><span
+                                        class="badge badge-secondary smallspan"
+                                > {{ arcperiod.getTittle() }}</span> </a><br/></h3>
+                        <p class="card-text">Antall visninger: {{ arcperiod.getViews() }}</p>
+                        <p class="card-text">Publikasjon dato: {{ arcperiod.getPubDate() }} </p>
+                    </div>
+                </div>
+
+                <br/>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+
+    {% if tempposts and blogisempty==0 %}
+
+        {% if innloget and blogowner and notownerofthisbliog==false %}
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Slett alle artikler</h5>
+
+
+                    <form method="Post">
+
+                        <button type="submit" name="deleteAllpostsOfUser" class="btn btn-danger">Slett alle artikler
+                        </button>
+
+                    </form>
+                </div>
+
+            </div>
+        {% endif %}
+        <br/>
+
+        <ul>
+            {% for post in tempposts %}
+
+                <div class="card bg-dark text-white w-60 p-6">
+                    <img class="img-fluid card-img-top " src="showimage.php?id_post={{ post.getIdPost() }}"
+                         alt="Card image">
+                    <div class="card-img-overlay">
+                        <h3 class="card-title"><a href="?idpost={{ post.getIdPost() }}"><span
+                                        class="badge badge-secondary smallspan"> {{ post.getTittle }}</span> </a><br/>
+                        </h3>
+                        <p class="card-text">Antall visninger: {{ post.getViews() }}</p>
+                        <p class="card-text">Publikasjon dato: {{ post.getPubDate() }} </p>
+                    </div>
+                </div>
+
+
+                <br/>
+            {% endfor %}
+        </ul>
+
+    {% endif %}
+
+
+    {% if   blogisempty==1 %}
+
+        <div class="alert alert-warning" role="alert">
+            Det er ingen artikler her ennå. <a href="#" onclick="history.back()" class="alert-link">gå tilbake til</a>
+        </div>
+    {% endif %}
+
+    {% if post1 %}
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title bigfont">{{ post1.getTittle }} </h3>
+
+                <br/>
+                <p class="card-text">
+
+
+                    <img class="img-fluid card-img-top " src="showimage.php?id_post={{ post1.getIdPost() }}"
+                         alt="Card image">
+                <hr>
+                    <small class="text-muted">Forfatter: <a href="?idblogabout={{ post1.getIdBlog() }}"> {{ post1.getUsername }} </a></small>
+                <hr>
+                <div class="textjust">{{ post1.getText }}</div>
+                <hr>
+
+                <div class="row">
+                    <div class="col-6" style="">
+                <span class="badge badge-success"><i
+                            class="fas fa-eye"></i> Antall visninger: {{ post1.getViews }} </span>
+                    </div>
+                    <div class="col-6" style="">
+               <h6 class="muted"> Publikasjon dato: {{ post1.getPubDate() }} </h6>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <br/>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-comments"></i> Kommentarer ({{ postscomments|length }}) </h5>
+
+                <p class="card-text">
+
+
+                    {% for comment in postscomments %}
+
+                    {% if comment.getCommentCommentID()== NULL %}
+
+                    <div class="alert alert-light kommwidth sidebarcolor" role="alert">
+
+                <p><strong>{{ comment.getText() }}</strong></p>
+                <div class="row">
+                    <div class="col-8">
+                        <span class="badge badge-secondary"> <i class="fas fa-user"></i> {{ comment.getUserName() }} <i
+                                    class="fas fa-calendar-alt"></i> {{ comment.getPubDate() }}</span> </p>
+                    </div>
+                    <!--Svar til komentar*/-->
+                    <div class="col-4">
+                        {% if innloget and id_user==comment.getIdUser() %}
+
+                            <form method="post">
+                                <input type="hidden" name="id_comment" value="{{ comment.getIdComment() }}">
+                                <button type="submit" class="badge badge-light" name="deleteComment">Slett komentar
+                                </button>
+                            </form>
+
+
+                        {% elseif postownerid==post1.getIdBlog() %}
+
+                            <form method="post">
+                                <input type="hidden" name="id_comment" value="{{ comment.getIdComment() }}">
+
+                                <button type="submit" class="badge badge-light" name="deleteComment">Slett komentar
+                                </button>
+                            </form>
+
+                        {% endif %}
+                    </div>
+                </div>
+                {% if innloget %}
+                    <form method="post">
+                        <div class="input-group input-group-sm mb-3">
+
+
+                            <input type="text" class="form-control" name="commentanswer" aria-label="Svar"
+                                   aria-describedby="inputGroup-sizing-sm" placeholder="Skriv svar...">
+                            <input type="hidden" name="commentcommentID" value="{{ comment.getIdComment() }}">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="submit" name="addcomment">Svar</button>
+                            </div>
+
+                        </div>
+
+                    </form>
+                {% endif %}
+
+
+            </div>
+            {% for comments in postscomments %}
+                {% if comments.getCommentCommentID()==comment.getIdComment() %}
+
+                    <div class="row justify-content-center">
+                        <div class="alert alert-light kommwidth sidebarcolor" role="alert">
+
+
+                            <p><strong>{{ comments.getText() }}</strong></p>
+                            <div class="row">
+                                <div class="col-8">
+                                    <span class="badge badge-secondary"> <i
+                                                class="fas fa-user"></i> {{ comments.getUserName() }} <i
+                                                class="fas fa-calendar-alt"></i> {{ comments.getPubDate() }}</span>
+                                </div>
+
+                                <div class="col-4">
+                                    {% if innloget and id_user==comments.getIdUser() %}
+
+                                        <form method="post">
+                                            <input type="hidden" name="id_comment"
+                                                   value="{{ comments.getIdComment() }}">
+                                            <button type="submit" class="badge badge-light" name="deleteComment">Slett
+                                                komentar
+                                            </button>
+                                        </form>
+
+
+                                    {% elseif postownerid==post1.getIdBlog() %}
+
+                                        <form method="post">
+                                            <input type="hidden" name="id_comment"
+                                                   value="{{ comments.getIdComment() }}">
+
+                                            <button type="submit" class="badge badge-light" name="deleteComment">Slett
+                                                komentar
+                                            </button>
+                                        </form>
+
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            {% endif %}
+
+            {% endfor %}
+
+            </p>
+
+
+        </div>
+
+        </div>
+
+
+
+
+        {% if innloget %}
+
+
+            <br/>
+
+            <form method="post">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Legg til kommentar</h5>
+
+                        <p class="card-text">
+                        <div class="input-group kommwidth">
+                            <textarea placeholder="Legg til text..." name="newcomment" class="form-control"
+                                      aria-label="Legg til text"></textarea>
+                        </div>
+                        </p>
+
+
+                        <button type="submit" class="btn btn-primary" name="addcomment">Legg till</button>
+
+                    </div>
+
+                </div>
+                <br/>
+
+            </form>
+
+            {% if blogowner and post1.getIdblog()==postownerid %}
+
+
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Slett artikkel</h5>
+
+
+                        <p class="card-text"> For å slette denne artikkelen, klikk på "Slett artikkel" -
+                            knappen.</p>
+
+
+                        <form method="Post">
+
+                            <button type="submit" name="deletePost" class="btn btn-danger">Slett artikkel
+                            </button>
+
+                        </form>
+                    </div>
+
+                </div>
+                <br/>
+            {% endif %}
+
+        {% else %}
+
+            <br/>
+            <div class="alert alert-danger" role="alert">
+                For å legge inn en kommentar må du være en autorisert bruker.
+            </div>
+            <br/>
+        {% endif %}
+
+    {% endif %}
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+{% endblock %}

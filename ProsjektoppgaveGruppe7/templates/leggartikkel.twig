@@ -1,0 +1,94 @@
+
+{% extends "index.twig" %}
+
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content1 %}
+
+    <br />
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Opprette en ny artikkel</h5>
+
+            <p class="card-text">For å opprette en ny artikkel fyll ut alle skjemaene </p>
+            <br/>
+
+            <form method="post" enctype="multipart/form-data">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Artikkeltittel</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="" name="tittle" aria-label="Artikkeltittel" aria-describedby="basic-addon1">
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Category</label>
+                    </div>
+
+                    <select class="custom-select" id="inputGroupSelect01" name="categ">
+                        <option selected >Choose category</option>
+                        {% for cat in category %}
+                            <option value={{ cat.id_category }}>{{ cat.categoryname }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="inputGroupFile02" name="photo">
+                        <label class="custom-file-label" for="inputGroupFile02" >Choose file</label>
+                    </div>
+                </div>
+
+                <script>
+                    $('#inputGroupFile02').on('change',function(){
+//get the file name
+                        var fileName = $(this).val();
+//replace the "Choose a file" label
+                        $(this).next('.custom-file-label').html(fileName);
+                    })
+                </script>
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
+
+                    </div>
+                    <textarea placeholder="Legg til text..." name="text" class="form-control" aria-label="Legg til text" ></textarea>
+                </div>
+
+                <div class="input-group topmarginsmall">
+                    <div class="input-group-prepend">
+
+                    </div>
+                    <input type="text" class="form-control" placeholder="Legg til nøkkelord..." name="keyword" aria-label="Nokkelord" aria-describedby="basic-addon1">
+                </div>
+
+                <div class="publiser">
+                    <button type="submit" class="btn btn-primary" name="publiser" >Publiser</button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+    <!— Optional JavaScript —>
+    <!— jQuery first, then Popper.js, then Bootstrap JS —>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js";
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/p..;
+integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap...;
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+{% endblock %}

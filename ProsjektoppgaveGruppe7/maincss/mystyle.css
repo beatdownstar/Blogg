@@ -1,0 +1,192 @@
+
+body {
+    background-image: url(../office-3309862_1920.jpg); /* Путь к фоновому изображению */
+
+}
+
+.backcol {
+    background-color: #E3F2FD;
+}
+
+.publiser {
+    margin-top: 2%;
+}
+
+div.messagemodal {
+    width: 400px;
+    height: 70px;
+}
+
+div.alonemodal {
+    background: #89CFDB;
+}
+
+.bigfont {
+    font-weight: bold;
+}
+
+div.successreg {
+    width: 700px;
+    height: 50px;
+}
+
+div.verifmodal {
+    width: 500px;
+    height: 50px;
+}
+
+div.topmarginbig {
+    margin-top: 50px;
+}
+
+div.topmarginsmall {
+    margin-top: 2%;
+}
+
+div.aboutblogger {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+div.sentr {
+    text-align: center;
+
+}
+
+div.smalltext {
+    color: #AFA092;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+span.categorystyle {
+    background: #89CFDB;
+    font-weight: normal;
+    width: 600px;
+    height: 40px;
+    color: black;
+
+
+
+}
+
+img.imagestyle {
+    height: 200px;
+}
+
+span.smallspan {
+    background-color: red;
+
+    font-size: 18px;
+    margin: 0;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-weight: normal;
+}
+
+span.bigspan {
+    background-color: red;
+
+    font-size: 30px;
+    margin: 0;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-weight: normal;
+}
+
+div.kommwidth {
+    width: 30rem;
+}
+
+span.blogfieldwidth {
+    width: 130px;
+}
+
+ul.panelstyle {
+    background-color: #90BCEE;
+}
+
+table.tablewidth {
+    width: 25rem;
+}
+
+div.footercolor {
+    background-color: #90BCEE;
+}
+
+div.footerrightfield {
+    background-color: #C63239;
+}
+
+small.uitcolor {
+    color: white;
+}
+
+a.carusellink:link {
+    color: white;
+
+}
+
+a.carusellink:visited {
+    color: white;
+}
+
+a.carusellink:hover {
+    text-decoration: none;
+}
+
+.headlinker {
+    color: #1E3C5F;
+}
+
+.sisteartikkel {
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+.sisteartikkelP {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+div.sidebarcolor {
+    background-color: #F3F4F5;
+}
+
+img.carouselstyle {
+    height: 400px;
+
+}
+
+
+.sisteartikkelPDate {
+    color: white;
+    font-size: 14px;
+    font-weight: lighter;
+}
+
+.sistart {
+    position: relative;
+    width: 50%;
+
+}
+
+img.imgsist {
+    height: 250px;
+    padding: 2px;
+
+}
+
+.varblog {
+    padding: 0;
+    margin: 0;
+    margin-right: 30px;
+}
+
+div.textjust {
+    text-align: justify;
+}
+

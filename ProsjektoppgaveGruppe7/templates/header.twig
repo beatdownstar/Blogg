@@ -1,0 +1,379 @@
+{% block header %}
+    <div class="container">
+        <div class="row ">
+            <ul class="nav justify-content-end w-100 p-0 navbar-fixed-top panelstyle">
+
+                <li class="nav-item">
+                    {% if innloget %}
+                        <a class="nav-link headlinker" href="?page=profile"> <i class="fa fa-user-circle "></i>
+                            Hei, {{ bloggernavn }}</a>
+
+                    {% else %}
+
+                        <a class="nav-link headlinker" href="#loginform" data-toggle="modal"> <i
+                                    class="fa fa-sign-in-alt"></i> Login</a>
+                    {% endif %}
+                </li>
+
+                <li class="nav-item">
+                    {% if innloget %}
+
+                        <a class="nav-link headlinker" href="?page=logout"> <i class="fa fa-sign-out-alt"
+                                                                               aria-hidden="true"></i> Logout </a>
+
+                    {% else %}
+
+                        <a class="nav-link headlinker " href="#registration" data-toggle="modal"><i
+                                    class="fa fa-user-plus"></i> Sign up </a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container ">
+        <div class="row ">
+            <nav class="navbar navbar-expand navbar-light bg-light col-12">
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+                        aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                    <!--тут поправить, чтоб имя блога не высвечивалось, если у юзера нет блога-->
+                    <h3 class="varblog"><strong>" {{ blogname }} " </strong></h3>
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <li class="nav-item ">
+
+                        </li>
+                        <li class="nav-item">
+                            {% if innloget==true and blogowner==true %}
+                                <form class="form-inline my-2 my-lg-0">
+                                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                                        <li class="nav-item active">
+                                            <a class="nav-link" href="?page=add">Legg til artikkel <span
+                                                        class="sr-only">(current)</span></a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="?page=myposts">Mine artikler</a>
+                                        </li>
+
+                                    </ul>
+
+                                </form>
+
+                            {% endif %}
+                        </li>
+                        <li class="nav-item">
+
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0" method="post">
+                        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="?page=home">Hjem <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="?page=category">Kategori</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " href="?page=about">Om</a>
+                            </li>
+
+                            <form method="post">
+
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" name="search" aria-label="search"
+                                           aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" name="btSearch" type="submit"><i
+                                                    class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                            <!— —>
+
+                        </ul>
+
+                    </form>
+                </div>
+
+            </nav>
+        </div>
+    </div>
+
+    <!— autorisasjon form modal —>
+
+    <div class="modal fade" id="loginform" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Autorisasjon</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        <div class="form-group">
+                            <label for="InputLogin"> Login</label>
+                            <input type="text" class="form-control" name="InputLogin" placeholder="Skriv inn login"
+                                   required>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="InputPassword">Passord</label>
+                            <input type="password" class="form-control" name="InputPassword"
+                                   placeholder="Skriv inn passord" required>
+                        </div>
+
+                        <button type="submit" name="login" class="btn btn-primary">Logg inn</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--registrasjon form modal-->
+
+    <div class="modal fade" id="registration" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Registrasjon</h5>
+                    <button type="button" class="close"
+                            data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form method="post">
+                        <div class="form-group">
+                            <label>Login</label>
+                            <input type="text" class="form-control" name="username" placeholder="Skriv inn login"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" class="form-control" name="password" placeholder="Skriv inn passord"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" name="gjentapas" placeholder="Gjenta passord"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email address</label>
+                            <input type="email" class="form-control" name="email" placeholder="Skriv inn epost"
+                                   required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" name="registrer">Registrer</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--vellykket registrasjon modal-->
+
+    <div class="modal fade" id="regplus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered successreg" role="document">
+            <div class="modal-content alonemodal">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="form-group bigfont">
+                        <label>Gratulerer, du registrerte vellykket, verifikasjon linken ble sendt til epost.</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--forskjellige passord modal-->
+
+    <div class="modal fade" id="regminus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered messagemodal" role="document">
+            <div class="modal-content alonemodal">
+                <div class="modal-header">
+                    <h5 class="modal-title">Feil</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group bigfont">
+                        <label>Passord kongruerer ikke, tast på nytt!</label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--ikke eksisterte user modal-->
+
+    <div class="modal fade" id="loginminus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered messagemodal" role="document">
+            <div class="modal-content alonemodal">
+                <div class="modal-header">
+                    <h5 class="modal-title">Feil</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group bigfont">
+                        <label>User eksisterer ikke, tast på nytt!</label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--ikke riktig passord modal-->
+
+    <div class="modal fade" id="passwordminus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered messagemodal" role="document">
+            <div class="modal-content alonemodal">
+                <div class="modal-header">
+                    <h5 class="modal-title">Feil</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group bigfont">
+                        <label>Passord passer ikke, tast på nytt!</label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--epost eksisterer modal-->
+
+    <div class="modal fade" id="emailexist" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered messagemodal" role="document">
+            <div class="modal-content alonemodal">
+                <div class="modal-header">
+                    <h5 class="modal-title">Feil</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group bigfont">
+                        <label>Epost eksisterer allerede, tast på nytt!</label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--login eksisterer modal-->
+
+    <div class="modal fade" id="loginexist" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered messagemodal" role="document">
+            <div class="modal-content alonemodal">
+                <div class="modal-header">
+                    <h5 class="modal-title">Feil</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group bigfont">
+                        <label>Login eksisterer allerede, tast på nytt</label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--ikke verifisert epost modal-->
+
+    <div class="modal fade" id="verifyminus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered messagemodal" role="document">
+            <div class="modal-content alonemodal">
+                <div class="modal-header">
+                    <h5 class="modal-title">Feil</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group bigfont">
+                        <label>Du kan ikke logge inn, verifiser din account først!t</label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--verifisert epost modal-->
+    <div class="modal fade" id="verifyplus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered verifmodal" role="document">
+            <div class="modal-content alonemodal">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="form-group bigfont">
+                        <label>Gratulerer, du har verifisert din account, nå kan du logge inn!</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+{% endblock %}
